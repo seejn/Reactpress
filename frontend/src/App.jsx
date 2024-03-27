@@ -8,9 +8,16 @@ function App() {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
-    const response = axios.get("http://localhost:3000");
-    console.log(response);
-  }, [])
+    const fetchData = async () => {
+      try{
+        const response = await axios.get("http://localhost:3000/");
+        console.log(response);
+      }catch(error){
+        console.log(error);
+      }
+    }
+    fetchData();
+  }, [count]);
 
   return (
     <>

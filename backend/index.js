@@ -1,10 +1,18 @@
 import express from "express";
+import cors from "cors";
 import mongoose from "mongoose";
 // import { PORT, mongoDBURL } from "./config.js";
 import { PORT } from "./config.js";
 
 const app = express();
 const serverMsg = `Server Listening on ${PORT}`;
+
+// cors middleware
+app.use(cors({
+	origin: ['http://localhost:5173'],
+	methods: ['PUT', 'POST', 'GET', 'DELETE'],
+	allowedHeaders: ['Content-Type']
+}));
 
 // middleware to parse request body
 app.use(express.json());
@@ -51,7 +59,6 @@ app.use((error, req, res, next) => {
 	const responseData = {
 		"error": {
 			"message": error.message || "Server Error",
-			"status": status
 		}
 	}
 	return res.status(status).json(responseData);
